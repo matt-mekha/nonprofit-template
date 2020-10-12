@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Home",
+    "fileName": "Home.js",
+    "link": "/"
+  },
+  {
+    "name": "About Us",
+    "fileName": "About.js",
+    "link": "/about"
+  },
+  {
+    "name": "Donate",
+    "fileName": "Donate.js",
+    "link": "/donate"
+  }
+]
