@@ -1,0 +1,163 @@
+// general
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// vars
+
+$fadeTime: 0.15s;
+
+$themeColor1Background: black;
+$themeColor1Accent: rgb(4, 4, 133);
+$themeColor1AccentAlternate: rgb(53, 123, 180);
+$themeColor1Text: white;
+
+$themeColor2Background: white;
+$themeColor2Accent: rgb(4, 4, 133);
+$themeColor2AccentAlternate: rgb(228, 175, 31);
+$themeColor2Text: black;
+
+$navBarTitleHeight: 100px;
+$navBarButtonHeight: 80px;
+$navBarHeight: $navBarTitleHeight + $navBarButtonHeight;
+
+$mainPadding: 50px;
+
+$footerHeight: 180px;
+
+$mainExcludedHeight: $footerHeight + $navBarHeight;
+
+// nav
+
+.navBar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: $themeColor1Background;
+  z-index: 10;
+  box-shadow: 0px 0px 8px 8px #aaa;
+  font-weight: bold;
+}
+
+.navBarLogo {
+  position: absolute;
+  width: $navBarTitleHeight;
+  height: $navBarTitleHeight;
+}
+
+.navBarMenuIconContainer {
+  display: none;
+}
+
+.navBarTitle {
+  height: $navBarTitleHeight;
+  line-height: $navBarTitleHeight;
+  margin: 0;
+  font-size: 36px;
+  color: $themeColor1Text;
+  position: relative;
+  left: $navBarTitleHeight;
+}
+
+.navBarButtonContainer {
+  height: $navBarButtonHeight;
+  display: flex;
+  background-color: inherit;
+}
+
+.navBarButton {
+  flex-grow: 1;
+  line-height: $navBarButtonHeight;
+  text-decoration: none;
+  text-align: center;
+  color: $themeColor1Text;
+  font-size: 24px;
+  background-color: inherit;
+  transition: background-color $fadeTime;
+
+  &:hover {
+    background-color: $themeColor1AccentAlternate
+  }
+}
+
+.navBarButtonActive {
+  background-color: $themeColor1Accent;
+}
+
+// main
+
+html {
+  background-color: $themeColor1Background;
+}
+
+.main {
+  position: relative;
+  top: $navBarHeight;
+  padding: $mainPadding;
+  min-height: calc(100vh - #{$mainExcludedHeight});
+  background-color: $themeColor2Background;
+  color: $themeColor2Text;
+}
+
+.main a {
+  color: $themeColor2Accent;
+  transition: color $fadeTime;
+
+  &:hover {
+    color: $themeColor2AccentAlternate
+  }
+}
+
+// footer
+
+.footer {
+  background-color: $themeColor1Background;
+  color: $themeColor1Text;
+  position: relative;
+  top: $navBarHeight;
+  height: $footerHeight;
+  padding: 30px 0;
+}
+
+.footerNotice {
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  text-align: center;
+}
+
+// components
+
+.title {
+  font-size: 48px;
+  text-align: center;
+}
+
+.bubbleVisualizerContainer {
+  width: 100vw;
+  height: 60vh;
+  position: relative;
+  right: $mainPadding;
+}
+
+.bubbleVisualizer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+}

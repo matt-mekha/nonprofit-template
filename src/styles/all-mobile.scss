@@ -1,0 +1,117 @@
+$breakpointWidth: 600px;
+
+$slideTime: 0.3s;
+
+$navBarButtonCount: 5;
+$navBarTitleHeight: 80px;
+$navBarButtonHeight: 60px;
+$navBarButtonContainerHeight: ($navBarButtonCount * $navBarButtonHeight);
+$navBarClosedHeight: $navBarTitleHeight;
+$navBarOpenHeight: $navBarTitleHeight + $navBarButtonContainerHeight;
+
+$mainPadding: 30px;
+
+$footerHeight: 150px;
+
+@media (max-width: $breakpointWidth) {
+  .navBar {
+    position: static;
+    box-shadow: none;
+    overflow: hidden;
+    height: $navBarClosedHeight;
+    transition: height $slideTime;
+  }
+
+  .navBarLogo {
+    position: absolute;
+    width: $navBarTitleHeight;
+    height: $navBarTitleHeight;
+  }
+
+  .navBarOpen {
+    height: $navBarOpenHeight;
+  }
+
+  .navBarButton {
+    line-height: $navBarButtonHeight;
+    font-size: 18px;
+  }
+
+  .navBarMenuIconContainer {
+    position: absolute;
+    width: $navBarTitleHeight;
+    height: $navBarTitleHeight;
+  }
+
+  .navBarMenuIconContainerVisible {
+    display: contents;
+  }
+
+  .navBarMenuIcon {
+    position: absolute;
+    right: 0;
+  }
+
+  .navBarTitle {
+    height: $navBarTitleHeight;
+    line-height: $navBarTitleHeight;
+    font-size: 24px;
+    position: relative;
+    left: $navBarTitleHeight;
+    width: calc(100vw - #{$navBarTitleHeight * 2});
+    overflow: hidden;
+  }
+
+  .navBarButtonContainer {
+    display: none;
+    height: $navBarButtonContainerHeight;
+    width: 100%;
+  }
+
+  .navBarOpen .navBarButtonContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main,
+  .footer {
+    position: static;
+  }
+  
+  .main {
+    padding: $mainPadding;
+    transition: min-height $slideTime;
+  }
+
+  .navBarOpen~.main {
+    min-height: calc(100vh - #{$navBarOpenHeight + $footerHeight});
+  }
+
+  .navBar:not(.navBarOpen)~.main {
+    min-height: calc(100vh - #{$navBarClosedHeight + $footerHeight});
+  }
+
+  .footer {
+    height: $footerHeight;
+    padding: 30px 50px;
+  }
+  
+  .footerNotice {
+    font-size: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: unset;
+    text-align: center;
+  }
+
+  // components
+
+  .title {
+    font-size: 36px;
+  }
+
+  .bubbleVisualizerContainer {
+    right: $mainPadding;
+    height: 100vw;
+  }
+}
