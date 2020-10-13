@@ -2,11 +2,251 @@
 <html>
 
 <head>
-
+  <meta charset="utf-8">
+  <script src='https://d3js.org/d3.v5.min.js'></script>
 </head>
 
 <body style="margin:0">
-<canvas style="width:100vw;height:calc(100vh - 4px);"></canvas>
+  <div id='vis'></div>
+
+  <script>
+    function bubbleChart() {
+      const width = Math.max(window.innerWidth, 500);
+      const height = Math.max(window.innerHeight, 500);
+
+      const centre = { x: width / 2, y: height / 2 };
+
+      const forceStrength = 0.04;
+
+      const hoveredSize = 30;
+      const maxNormalRadius = 60;
+
+      let svg;
+      let bubbles, names, titles, descriptions;
+      let nodes = [];
+
+      function charge(d) {
+        return Math.pow(d.radius, 2.0) * 0.01
+      }
+
+      let radiusScale;
+
+      const simulation = d3.forceSimulation()
+        .force('charge', d3.forceManyBody().strength(charge))
+        .force('x', d3.forceX().strength(forceStrength).x(centre.x))
+        .force('y', d3.forceY().strength(forceStrength).y(centre.y))
+        .force('collision', d3.forceCollide().radius(d => d.radius * 1.05));
+
+      simulation.stop();
+
+      function createNodes(rawData) {
+        const maxSize = d3.max(rawData, d => +d.size);
+        radiusScale = d3.scaleSqrt()
+          .domain([0, maxSize])
+          .range([0, maxNormalRadius])
+
+        const myNodes = rawData.map(d => ({
+          ...d,
+          radius: radiusScale(+d.size),
+          size: +d.size,
+          x: Math.random() * width,
+          y: Math.random() * height,
+          url: d.url,
+          title: d.title,
+          desc: d.desc
+        }))
+
+        return myNodes;
+      }
+
+      let chart = function chart(selector, rawData) {
+        nodes = createNodes(rawData);
+
+        svg = d3.select(selector)
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .attr("xmlns:xhtml", "http://www.w3.org/1999/xhtml")
+
+        svg.append('defs')
+          .selectAll('.pattern')
+          .data(nodes, d => d.id)
+          .enter()
+          .append('pattern')
+          .attr('id', d => 'image' + d.id)
+          .attr('patternContentUnits', 'objectBoundingBox')
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .append('image')
+          .attr('width', '1')
+          .attr('height', '1')
+          .attr('xlink:href', d => d.url)
+
+        const elements = svg.selectAll('.bubble')
+          .data(nodes, d => d.id)
+          .enter()
+          .append('g')
+
+        bubbles = elements
+          .append('circle')
+          .classed('bubble', true)
+          .attr('data-id', d => d.id)
+          .attr('r', d => d.radius)
+          .attr('fill', d => 'url(#image' + d.id + ')');
+
+        names = elements
+          .append('foreignObject')
+          .attr('width', 300)
+          .attr('height', 300)
+          .classed('name', true)
+
+        names
+          .append("xhtml:p")
+          .text(d => d.name)
+
+        titles = elements
+          .append('foreignObject')
+          .attr('width', 300)
+          .attr('height', 300)
+          .classed('title', true)
+
+        titles
+          .append("xhtml:p")
+          .text(d => d.title)
+
+        descriptions = elements
+          .append('foreignObject')
+          .attr('width', 300)
+          .attr('height', 300)
+          .classed('desc', true)
+
+        descriptions  
+          .append("xhtml:p")
+          .text(d => d.desc)
+
+        simulation.nodes(nodes)
+          .alphaTarget(0.1)
+          .on('tick', ticked)
+          .on('end', () => simulation.restart())
+          .restart();
+
+
+        let lastHoveredCircle = null;
+        let rememberedSize = 0;
+
+        const handleMouse = function (event) {
+          const x = event.clientX, y = event.clientY;
+          let target = document.elementFromPoint(x, y);
+          while (target.tagName === "text") {
+            target = target.previousSibling;
+          }
+          if (target.tagName === "circle")
+            hoveredCircle = target.dataset.id - 1;
+          else
+            hoveredCircle = null;
+
+          if (lastHoveredCircle !== hoveredCircle) {
+            if (lastHoveredCircle !== null) {
+              simulation.nodes()[lastHoveredCircle].size = rememberedSize;
+              simulation.nodes()[lastHoveredCircle].radius = radiusScale(rememberedSize);
+              simulation.nodes(simulation.nodes());
+            }
+            if (hoveredCircle !== null) {
+              rememberedSize = simulation.nodes()[hoveredCircle].size;
+              simulation.nodes()[hoveredCircle].size = hoveredSize;
+              simulation.nodes()[hoveredCircle].radius = radiusScale(hoveredSize);
+              simulation.nodes(simulation.nodes());
+            }
+          }
+
+          lastHoveredCircle = hoveredCircle;
+        };
+
+        document.addEventListener("mousemove", handleMouse)
+      }
+
+      function ticked() {
+        bubbles
+          .attr('cx', d => d.x)
+          .attr('cy', d => d.y)
+          .attr('r', d => d.radius);
+
+        names
+          .attr('x', d => d.x - 150)
+          .attr('y', d => d.y - 50);
+        titles
+          .attr('x', d => d.x - 150)
+          .attr('y', d => d.y - 50);
+        descriptions
+          .attr('x', d => d.x - 150)
+          .attr('y', d => d.y - 50);
+      }
+
+      return chart;
+    }
+
+    let myBubbleChart = bubbleChart();
+
+    function display(data) {
+      myBubbleChart('#vis', data);
+    }
+
+    d3.csv('bubble-data.csv').then(display);
+
+  </script>
+
+  <style>
+    #vis {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    circle:hover {
+      fill-opacity: 0.3;
+    }
+
+    circle {
+      transition: r 0.3s, fill-opacity 0.3s;
+    }
+
+    foreignObject p {
+      padding: 0 20px;
+    }
+
+    foreignObject {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s;
+      text-anchor: middle;
+      text-align: center;
+      pointer-events: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    }
+
+    circle:hover ~ foreignObject {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .name {
+      font-size: 26px;
+      transform: translateY(-70px);
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      transform: translateY(-20px);
+    }
+
+    .desc {
+      font-size: 14px;
+      font-weight: normal;
+      transform: translateY(20px);
+    }
+  </style>
 </body>
 
 </html>
