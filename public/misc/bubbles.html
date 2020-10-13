@@ -192,7 +192,8 @@
     }
 
     d3.csv('bubble-data.csv').then(display);
-
+  
+    window.onresize = () => window.location.reload(false);
   </script>
 
   <style>
