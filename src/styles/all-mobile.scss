@@ -114,4 +114,10 @@ $footerHeight: 150px;
     height: 100vw;
     right: $mainPadding;
   }
+
+  .calendarEmbed {
+    position: relative;
+    right: $mainPadding;
+    width: 100vw;
+  }
 }
