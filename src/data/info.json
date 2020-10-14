@@ -13,19 +13,34 @@
       "link": "/about"
     },
     {
-      "name": "Donate",
-      "fileName": "Donate.js",
-      "link": "/donate"
-    },
-    {
       "name": "Events",
       "fileName": "Events.js",
       "link": "/events"
+    },
+    {
+      "name": "Donate",
+      "fileName": "Donate.js",
+      "link": "/donate"
     },
     {
       "name": "Contact Us",
       "fileName": "Contact.js",
       "link": "/contact"
     }
-  ]
+  ],
+  "contactMethods":[
+    {
+      "title":"Phone",
+      "linkHref":"tel:+18326411809",
+      "linkName":"+1 (832) 641-1809",
+      "img":""
+    },
+    {
+      "title":"Email",
+      "linkHref":"mailto:matthew.mekha@gmail.com",
+      "linkName":"matthew.mekha@gmail.com",
+      "img":""
+    }
+  ],
+  "calendarId":"ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t"
 }

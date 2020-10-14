@@ -155,3 +155,22 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+.contactMethodContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  font-size: 22px;
+  position: relative;
+}
+
+.contactMethodTitle {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.contactMethodLink {
+  position: absolute;
+  left: 150px;
+  top: 0;
+}

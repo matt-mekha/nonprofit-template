@@ -120,4 +120,14 @@ $footerHeight: 150px;
     right: $mainPadding;
     width: 100vw;
   }
+
+  .contactMethodContainer {
+    font-size: 18px;
+    position: static;
+    padding-bottom: 20px;
+  }
+
+  .contactMethodLink {
+    position: static;
+  }
 }
