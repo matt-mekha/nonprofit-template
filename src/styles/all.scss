@@ -13,7 +13,7 @@ $themeColor2AccentAlternate: rgb(228, 175, 31);
 $themeColor2Text: black;
 
 $navBarTitleHeight: 100px;
-$navBarButtonHeight: 80px;
+$navBarButtonHeight: 60px;
 $navBarHeight: $navBarTitleHeight + $navBarButtonHeight;
 
 $mainPadding: 50px;
@@ -173,4 +173,17 @@ body {
   position: absolute;
   left: 150px;
   top: 0;
+}
+
+.donorboxEmbed {
+  max-width: 500px;
+  min-width: 310px;
+  max-height: none!important;
+  height: 1000px;
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  left: 25px;
 }

@@ -4,7 +4,7 @@ $slideTime: 0.3s;
 
 $navBarButtonCount: 5;
 $navBarTitleHeight: 80px;
-$navBarButtonHeight: 60px;
+$navBarButtonHeight: 50px;
 $navBarButtonContainerHeight: ($navBarButtonCount * $navBarButtonHeight);
 $navBarClosedHeight: $navBarTitleHeight;
 $navBarOpenHeight: $navBarTitleHeight + $navBarButtonContainerHeight;
@@ -128,6 +128,10 @@ $footerHeight: 150px;
   }
 
   .contactMethodLink {
+    position: static;
+  }
+
+  .donorboxEmbed {
     position: static;
   }
 }
