@@ -110,6 +110,10 @@ $footerHeight: 150px;
     font-size: 36px;
   }
 
+  .subtitle {
+    font-size: 28px;
+  }
+
   .bubbleVisualizerContainer {
     height: 100vw;
     right: $mainPadding;
@@ -133,5 +137,9 @@ $footerHeight: 150px;
 
   .donorboxEmbed {
     position: static;
+  }
+
+  .donorboxEmbedLoading {
+    width: calc(100vw - #{2 *$mainPadding});
   }
 }
